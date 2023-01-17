@@ -4,7 +4,7 @@ Smart tiny config library for flask-like config
 
 ## How to install
 
-    pip install design_config
+    pip install design-config
 
 
 You can find source code of library on [GitHub](https://github.com/artmihant/design_config)
