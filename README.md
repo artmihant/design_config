@@ -33,6 +33,7 @@ You can find source code of library on [GitHub](https://github.com/artmihant/des
 
     config = Config()
 
+
 If your global environment variables contain $PROP_TWO , it will be replaced in the config with the appropriate value. Otherwise, it will remain by default (World)
 
 `D` means *"default"*
@@ -50,6 +51,28 @@ If your global environment variables contain $PROP_TWO , it will be replaced in 
     config('{PROP_FOUR}', 'London') # "PROP_FOUR"
 
     config.path('{PROP_ONE}', 'some_folder', '{PROP_TWO}2') # os.path.join("Hello","some_folder","World2")
+
+
+Also you can use `int`, `bool`, and `float` values:
+
+    class Config(DesignConfig):
+
+        PROP_FIVE = D(55)
+
+        PROP_SIX = D(True)
+
+        PROP_SEVEN = D(7.7)
+
+    config = Config({
+        'PROP_FIVE': '5', 
+        'PROP_SIX': 'FALSE',
+        'PROP_SEVEN': '7e7'
+    })
+
+    config.PROP_FIVE # 5
+    config.PROP_SIX # False
+    config.PROP_SEVEN # 7e7
+
 
 You can use DesignConfig with Flask like that:
 

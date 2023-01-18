@@ -38,20 +38,36 @@ class DesignConfig:
         if hasattr(self, key):
             value = getattr(self, key)
             if type(value) == D:
+                type_value = type(value.data)
+
+                assert type_value in [str, bool, int, float], \
+                    f"D-function only handles atomic values, not {type_value}"
+
                 if key not in self._data:
                     value = value.data
                 else:
                     value = self._data[key]
 
-            if type(value) != str:
+                    if type_value is bool:
+                        if type(value) == str:
+                            if value.lower() in ['false','no','0']:
+                                value = False
+                        value = bool(value)
+                    elif type_value is int:
+                        try:
+                            value = int(value)
+                        except ValueError:
+                            value = 0
+                    elif type_value is float:
+                        try:
+                            value = float(value)
+                        except ValueError:
+                            value = 0
+
+            if type(value) == str:
+                return self._get_format(value)
+            else:
                 return value
-
-            if value.lower() == 'true':
-                return True
-            elif value.lower() == 'false':
-                return False
-
-            return self._get_format(value)
 
         elif default is not None:
             return default
